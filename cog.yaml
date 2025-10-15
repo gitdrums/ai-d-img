@@ -1,0 +1,15 @@
+build:
+  gpu: true
+  cuda: "11.8"
+  python_version: "3.11"
+  python_packages:
+    - "torch==2.1.0"
+    - "torchvision==0.16.0"
+    - "transformers==4.35.0"
+    - "Pillow==10.1.0"
+  
+  run:
+    # Download base CvT-13 model during build - it gets cached in the image
+    - "python -c 'from transformers import AutoImageProcessor, AutoModelForImageClassification; AutoImageProcessor.from_pretrained(\"microsoft/cvt-13\"); AutoModelForImageClassification.from_pretrained(\"microsoft/cvt-13\", num_labels=2, ignore_mismatched_sizes=True)'"
+
+predict: "predict.py:Predictor"
